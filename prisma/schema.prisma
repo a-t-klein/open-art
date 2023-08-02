@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,168 +7,193 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  user_id    Int       @id @default(autoincrement())
-  username   String
-  email      String
-  password   String
+  user_id           Int      @id @default(autoincrement())
+  username          String
+  email             String
+  password          String
   registration_date DateTime
   // Add other user-specific attributes here
 }
 
 model Artwork {
-  artwork_id    Int       @id @default(autoincrement())
+  artwork_id    Int      @id @default(autoincrement())
   title         String
-  artist        String
   creation_date DateTime
   medium        String
   description   String
   image_url     String
   // Add other artwork-specific attributes here
 
+  // Fields
+  artist_id  Int
+  gallery_id Int
+  status_id  Int
+
   // Relationships
-  artist        Artist?     @relation(fields: [artist], references: [artist_id])
-  artist_id     Int?
-  categories    Category[]  @relation("Artwork_Category", references: [category_id])
-  owners        Owner[]     @relation("Artwork_Owner")
-  exhibitions   Exhibition[] @relation("Artwork_Exhibition", references: [exhibition_id])
-  tags          Tag[]       @relation("Artwork_Tag", references: [tag_id])
-  comments      Comment[]   @relation("Artwork_Comment")
+  artist             Artist               @relation(name: "ArtworkToArtist", fields: [artist_id], references: [artist_id])
+  categories         Category[]           @relation("Artwork_Category")
+  owners             Owner[]              @relation("Artwork_Owner")
+  exhibitions        Exhibition[]         @relation("Artwork_Exhibition")
+  tags               Tag[]                @relation("Artwork_Tag")
+  gallery            Gallery?             @relation(name: "Artwork_Gallery", fields: [gallery_id], references: [gallery_id])
+  status             Status?              @relation(name: "Artwork_Status", fields: [status_id], references: [status_id])
+  Artwork_Exhibition Artwork_Exhibition[]
+  Artwork_Gallery    Artwork_Gallery[]
+  Artwork_Owner      Artwork_Owner[]
+  Artwork_Status     Artwork_Status[]
+  Artwork_Tag        Artwork_Tag[]
 }
 
 model Artist {
-  artist_id     Int       @id @default(autoincrement())
-  name          String
-  birth_date    DateTime
-  nationality   String
-  biography     String
-  // Add other artist-specific attributes here
+  artist_id   Int      @id @default(autoincrement())
+  name        String
+  birth_date  DateTime
+  nationality String
+  biography   String
 
   // Relationships
-  artworks      Artwork[]   @relation("Artist_Artwork", references: [artwork_id])
+  artworks Artwork[] @relation("ArtworkToArtist")
 }
 
+model Category {
+  category_id Int     @id @default(autoincrement())
+  name        String
+  description String?
+  // Add other category-specific attributes here
+
+  // Relationships
+  artworks Artwork[] @relation("Artwork_Category")
+}
 
 model Exhibition {
-  exhibition_id  Int       @id @default(autoincrement())
-  name           String
-  start_date     DateTime
-  end_date       DateTime
-  location       String
-  description    String
+  exhibition_id Int      @id @default(autoincrement())
+  name          String
+  start_date    DateTime
+  end_date      DateTime
+  location      String
+  description   String
   // Add other exhibition-specific attributes here
 
   // Relationships
-  artworks       Artwork[]   @relation("Artwork_Exhibition")
-  galleries      Gallery[]   @relation("Gallery_Exhibition")
+  artworks           Artwork[]            @relation("Artwork_Exhibition")
+  galleries          Gallery[]            @relation("Gallery_Exhibition")
+  Artwork_Exhibition Artwork_Exhibition[]
 }
 
 model Artwork_Exhibition {
+
   artwork_id    Int
   exhibition_id Int
 
   // Relationships
-  artwork       Artwork     @relation(fields: [artwork_id], references: [artwork_id])
-  exhibition    Exhibition  @relation(fields: [exhibition_id], references: [exhibition_id])
+  artwork    Artwork    @relation(fields: [artwork_id], references: [artwork_id])
+  exhibition Exhibition @relation(fields: [exhibition_id], references: [exhibition_id])
 
   @@id([artwork_id, exhibition_id])
 }
 
 model Gallery {
-  gallery_id     Int       @id @default(autoincrement())
-  name           String
-  location       String
-  contact_info   String
-  website        String
+  gallery_id   Int    @id @default(autoincrement())
+  name         String
+  location     String
+  contact_info String
+  website      String
   // Add other gallery-specific attributes here
 
   // Relationships
-  exhibitions    Exhibition[] @relation("Gallery_Exhibition")
-  artworks       Artwork[]    @relation("Artwork_Gallery")
+  exhibitions     Exhibition[]      @relation("Gallery_Exhibition")
+  artworks        Artwork[]         @relation("Artwork_Gallery")
+  Artwork_Gallery Artwork_Gallery[]
 }
 
 model Artwork_Gallery {
-  artwork_id     Int
-  gallery_id     Int
+
+  artwork_id Int
+  gallery_id Int
 
   // Relationships
-  artwork        Artwork     @relation(fields: [artwork_id], references: [artwork_id])
-  gallery        Gallery     @relation(fields: [gallery_id], references: [gallery_id])
+  artwork Artwork @relation(fields: [artwork_id], references: [artwork_id])
+  gallery Gallery @relation(fields: [gallery_id], references: [gallery_id])
 
   @@id([artwork_id, gallery_id])
 }
 
 model Gallery_Exhibition {
-  gallery_id     Int
-  exhibition_id     Int
 
+  gallery_id    Int
+  exhibition_id Int
 
+  @@id([gallery_id, exhibition_id])
 }
 
 model Owner {
-  owner_id       Int       @id @default(autoincrement())
-  name           String
-  contact_info   String
+  owner_id     Int    @id @default(autoincrement())
+  name         String
+  contact_info String
   // Add other owner-specific attributes here
 
   // Relationships
-  artworks       Artwork[]   @relation("Artwork_Owner")
+  artworks      Artwork[]       @relation("Artwork_Owner")
+  Artwork_Owner Artwork_Owner[]
 }
 
 model Artwork_Owner {
-  artwork_id     Int
-  owner_id       Int
-  ownership_type String
+
+  artwork_id       Int
+  owner_id         Int
+  ownership_type   String
   acquisition_date DateTime?
-  price          Float?
-  
+  price            Float?
+
   // Relationships
-  artwork        Artwork     @relation(fields: [artwork_id], references: [artwork_id])
-  owner          Owner       @relation(fields: [owner_id], references: [owner_id])
+  artwork Artwork @relation(fields: [artwork_id], references: [artwork_id])
+  owner   Owner   @relation(fields: [owner_id], references: [owner_id])
 
   @@id([artwork_id, owner_id])
 }
 
 model Status {
-  status_id     Int       @id @default(autoincrement())
-  name          String
-  description   String
+  status_id   Int    @id @default(autoincrement())
+  name        String
+  description String
   // Add other status-specific attributes here
 
   // Relationships
-  artworks      Artwork[]   @relation("Artwork_Status")
+  artworks       Artwork[]        @relation("Artwork_Status")
+  Artwork_Status Artwork_Status[]
 }
 
 model Artwork_Status {
-  status_id         Int
-  artwork_id        Int
-  change_date       DateTime
+  status_id   Int
+  artwork_id  Int
+  change_date DateTime
 
   // Relationships
-  artwork           Artwork       @relation(fields: [artwork_id], references: [artwork_id])
-  status            Status        @relation(fields: [status_id], references: [status_id])
+  artwork Artwork @relation(fields: [artwork_id], references: [artwork_id])
+  status  Status  @relation(fields: [status_id], references: [status_id])
 
   @@id([artwork_id, status_id])
 }
 
 model Tag {
-  tag_id          Int       @id @default(autoincrement())
-  name            String
-  description     String
+  tag_id      Int    @id @default(autoincrement())
+  name        String
+  description String
   // Add other tag-specific attributes here
 
   // Relationships
-  artworks        Artwork[]   @relation("Artwork_Tag")
+  artworks    Artwork[]     @relation("Artwork_Tag")
+  Artwork_Tag Artwork_Tag[]
 }
 
 model Artwork_Tag {
-  artwork_id      Int
-  tag_id          Int
+  artwork_id Int
+  tag_id     Int
 
   // Relationships
-  artwork         Artwork     @relation(fields: [artwork_id], references: [artwork_id])
-  tag             Tag         @relation(fields: [tag_id], references: [tag_id])
+  artwork Artwork @relation(fields: [artwork_id], references: [artwork_id])
+  tag     Tag     @relation(fields: [tag_id], references: [tag_id])
 
   @@id([artwork_id, tag_id])
 }
