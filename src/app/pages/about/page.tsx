@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 const About = () => {
   return(
     <div>
-      <h1>this is an about page</h1>
+      <Link href="/">Back to home</Link>
     </div>
   )
 

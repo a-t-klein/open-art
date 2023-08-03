@@ -1,7 +1,11 @@
+import Navbar from "./containers/Navbar"
+
 export default function Home() {
   return (
     <main>
-      <div>test</div>
+      <Navbar />
+      <div>open-art</div>
+      <div>coming soon</div>
     </main>
   )
 }
