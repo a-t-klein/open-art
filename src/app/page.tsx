@@ -3,9 +3,14 @@ import "tailwindcss/tailwind.css";
 
 export default function Home() {
   return (
-    <main>
+    <main
+      className={`
+      bg-background
+      text-white
+    `}
+    >
       <Navbar />
-      <div className="text-red-500 font-bold">open-art</div>
+      <div>open-art</div>
       <div>coming soon</div>
     </main>
   );

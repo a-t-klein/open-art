@@ -2,6 +2,10 @@
   "name": "open-art",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "alex t. klein",
+    "email": "alxtkln@gmail.com"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -25,6 +29,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.27",
+    "prettier-plugin-tailwindcss": "^0.4.1",
     "tailwindcss": "^3.3.3"
   }
 }
