@@ -1,4 +1,4 @@
-import Navbar from "./containers/Navbar"
+import Navbar from "./containers/Navbar";
 
 export default function Home() {
   return (
@@ -7,5 +7,5 @@ export default function Home() {
       <div>open-art</div>
       <div>coming soon</div>
     </main>
-  )
+  );
 }
