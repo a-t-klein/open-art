@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { IBM_Plex_Mono } from "next/font/google";
 
-const inter = IBM_Plex_Mono({ subsets: ["cyrillic"], weight: ["300"] });
+const inter = IBM_Plex_Mono({ subsets: ["cyrillic"], weight: "400" });
 
 export const metadata: Metadata = {
   title: "open art",
