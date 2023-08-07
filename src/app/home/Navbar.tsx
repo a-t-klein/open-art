@@ -8,6 +8,9 @@ const Navbar = (): React.JSX.Element => {
         <li>
           <Link href="/home/about">About</Link>
         </li>
+        <li>
+          <Link href="/open_art/dashboard">Dashboard</Link>
+        </li>
       </ul>
     </div>
   );
@@ -15,21 +18,16 @@ const Navbar = (): React.JSX.Element => {
 
 export default Navbar;
 
-
-//left side 
+//left side
 
 //logo
 //some into stacked
 
-
-
 //right side//
 
-// light/dark mode; 
+// light/dark mode;
 // github
 // signup
 // signin
 // contact
 // about
-
-

@@ -1,4 +1,4 @@
-import Navbar from "./containers/Navbar";
+import Navbar from "./home/Navbar";
 import "tailwindcss/tailwind.css";
 
 export default function Home() {
