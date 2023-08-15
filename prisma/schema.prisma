@@ -12,24 +12,26 @@ model User {
   username          String
   email             String
   password          String
-  registration_date DateTime
+  registration_date DateTime @default(now())
   // Add other user-specific attributes here
 }
 
 model Artwork {
-  artwork_id    Int      @id @default(autoincrement())
-  title         String
-  creation_date DateTime
-  length        String?
-  width         String?
-  height        String?
-  duration      String?
-  weight        String?
-  medium        String
-  edition       Boolean
-  description   String
-  image_url     String
-  location      String
+  artwork_id     Int      @id @default(autoincrement())
+  title          String
+  creation_date  DateTime      @default(now())
+  year           Int 
+  medium         String
+  length         Decimal?  @db.Decimal(10, 2)
+  width          Decimal?  @db.Decimal(10, 2)
+  height         Decimal?  @db.Decimal(10, 2)
+  duration       String?
+  weight         Decimal?  @db.Decimal(10, 2)
+  multiple       Boolean
+  edition_mumber Int?
+  description    String
+  image_url      String
+  location       String
 
   // Fields
   artist_id  Int

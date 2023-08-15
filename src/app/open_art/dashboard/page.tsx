@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../containers/Sidebar";
 import DashboardCards from "../components/DashboardCards";
 
 function Dashboard() {

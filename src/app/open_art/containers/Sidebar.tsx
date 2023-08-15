@@ -5,7 +5,7 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 import { FiSettings } from "react-icons/fi";
 
 //components
-import SidebarLink from "./SidebarLink";
+import SidebarLink from "../components/SidebarLink";
 
 //interface
 interface SidebarProps {
@@ -17,7 +17,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
     "/open_art/dashboard",
     "/open_art/artists",
     "/open_art/account",
-    "/",
+    "/open_art/artworks",
     "/",
   ];
   const icons: ReactNode[] = [
