@@ -1,3 +1,5 @@
+"client";
+
 import React, { ReactNode } from "react";
 import Image from "next/image";
 import { RxSketchLogo, RxDashboard, RxPerson } from "react-icons/rx";
@@ -17,7 +19,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
     "/open_art/dashboard",
     "/open_art/artists",
     "/open_art/account",
-    "/open_art/artworks",
+    "/open_art/containers/ArtWorksDashboard",
     "/",
   ];
   const icons: ReactNode[] = [

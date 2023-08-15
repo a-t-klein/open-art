@@ -1,7 +1,6 @@
 "use client";
-import React from "react"
-import { Button } from "@material-tailwind/react";
-
+import React from "react";
+import { Input, Checkbox, Button, Typography } from "@material-tailwind/react";
 
 const newWorkForm = () => {
   //create a new work in the DB;
@@ -80,17 +79,23 @@ const newWorkForm = () => {
     },
   ];
 
+  const inputComponents = fields.map((field) => {
+    return <Input variant="standard" label={field.label} />;
+  });
   return (
     <div>
-      <form>
-        <input
-          type="submit"
-          value="submit"
-          onClick={() => createNewArtwork()}
-        />
-      </form>
+      <Typography variant="h4">New Work</Typography>
+      <Typography color="gray" className="mt-1 font-normal">
+        Enter your details to register.
+      </Typography>
 
-      <Button>X</Button>
+      <form>
+        {inputComponents}
+        <span>
+          <Button variant="filled">Confirm</Button>
+          <Button variant="outlined">Cancel</Button>
+        </span>
+      </form>
     </div>
   );
 };
